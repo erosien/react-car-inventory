@@ -52,6 +52,14 @@ h2 {
 .grid-container {
     background-color: white;
     border-radius: 5px;
+    margin-right: 40px;
+    margin-left: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 600px;
+    width: 97%;
 }
 
 .grid {
@@ -63,4 +71,82 @@ button {
     margin: 10px;
 }
 
+.form-container {
+    display: block;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+form {
+    display: block;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+input {
+    padding: 5px;
+    margin: 5px;
+}
+
+.modal-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.653);
+    display: flex;
+    z-index: 1;
+    overflow: auto;
+    align-items: center;
+}
+
+.modal {
+    width: 600px;
+    height: 600px;
+    z-index: 1;
+    background-color: white;
+    border-radius: 2px;
+    margin-top: 20px;
+    display: flex;
+    position: fixed;
+}
+
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.exit-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.exit-button {
+    display: flex;
+    justify-content: start;
+    margin: 3px;
+    background-color: gray;
+    padding: 2px;
+    border-radius: 2px;
+    color: white;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: start;
+    font-weight: bold;
+    margin-top: 3px;
+    padding: 2px;
+}
+
+.button-container {
+    display: flex;
+    padding: 1px;
+}

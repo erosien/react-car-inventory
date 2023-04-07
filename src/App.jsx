@@ -1,19 +1,35 @@
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter, HashRouter } from 'react-router-dom'
 import Navbar from './components/Navbar'
-import Home from "./components/Home";
-import Dashboard from "./components/Dashboard";
-import Profile from "./components/Profile";
+import routes from './config/routes'
+import { Provider } from 'react-redux'
+import { store } from './redux/store'
 import "./main.css"
+
+import AuthChecker from './auth/AuthChecker';
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <Navbar />   
-                <Routes>
-                    <Route exact path="/" element={<Home />}></Route>
-                    <Route path="/Profile" element={<Profile />}></Route>
-                    <Route path="Dashboard" element={<Dashboard />}></Route>
-                </Routes>
-        </BrowserRouter>
-    );
+        <HashRouter>
+            <Navbar />
+                <Provider store={store}>   
+                    <Routes>
+                        { routes.map((route, index) => (
+                            <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                                route.protected ? (
+                                <AuthChecker>
+                                    <route.component />
+                                </AuthChecker>
+                                ) : (
+                                    <route.component />
+                                )
+                            }
+                            />
+                        )) }
+                    </Routes>
+                </Provider>
+        </HashRouter>
+    )
 }

@@ -1,45 +1,65 @@
-import React from 'react'
-import { DataGrid, } from '@mui/x-data-grid';
+import React, { useState } from 'react'
+import { DataGrid } from '@mui/x-data-grid';
+import Button from './Button';
+import Modal from './Modal';
+import {server_calls } from '../api/server'
+import {useGetData } from '../custom-hooks/FetchData'
 import "../main.css"
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-]
-
-const rows = [
-    { id: 1, lastName: 'Lobster', firstName: 'Larry', age: 37 },
-    { id: 2, lastName: 'Temple', firstName: 'Shirley', age: 10 },
-    { id: 3, lastName: 'Kent', firstName: 'Clark', age: 45 },
-    { id: 4, lastName: 'Lector', firstName: 'Hector', age: 76 },
-  ];
-
 function DataTable() {
+    const [ open, setOpen ] = useState(false);
+    const { carData, getData } = useGetData();
+    const [ selectionModel, setSelectionModel ] = useState([])
+
+    const handleOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+
+    const deleteData = () => {
+        server_calls.delete(selectionModel[0]);
+        getData();
+        console.log(`Selection model: ${selectionModel}`)
+        setTimeout( () => { window.location.reload() }, 500)
+    }
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 70, hide: true},
+        { field: 'make', headerName: 'Make', flex: 1},
+        { field: 'model', headerName: 'Model', flex: 1},
+        { field: 'color', headerName: 'Color', flex: 1},
+        { field: 'year', headerName: 'Year', flex: 1},
+    ]
+
     return (
         <>
-            <div className="button-container">
-                <button>
-                    Create New Contact
-                </button>
-                <button>
-                    Update
-                </button>
-                <button>
-                    Delete
-                </button>
-            </div>
-            <div className="grid-container" style={{ height: 400, width: '100%' }}>
-                    <h2>My Contacts</h2>
-                    <DataGrid  className="grid" rows={rows} columns={columns} pagesize={5} rowsPerPageOptions={[5]}
+            <Modal
+                id={selectionModel}
+                open={open}
+                onClose={handleClose}
+            />
+                <div className="buttons">
+                    <div>
+                        <Button onClick={() => handleOpen()}>Add New Car</Button>
+                        <Button onClick={handleOpen}>Update</Button>
+                        <Button onClick={deleteData}>Delete</Button>
+                    </div>
+                </div>
+                <div className={ open ? "hidden" : "grid-container"}>
+                    <h2>My Cars</h2>
+                    <DataGrid  
+                    className="grid" rows={carData} columns={columns} rowsPerPageOptions={[5]}
                     checkboxSelection={true} 
-                    onSelectionModelChange={ () => {
+                    onSelectionModelChange={ (item) => {
                         setSelectionModel(item)
                     }}
                     />
             </div>
         </>
     )
-}
+};
 
 export default DataTable

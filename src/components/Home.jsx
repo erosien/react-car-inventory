@@ -6,10 +6,10 @@ export default function Home( props ) {
 
     return (
         <div>
-            <div classname="container">
+            <div className="container">
                 <h2>Welcome, {name}!</h2>
             </div>
-            <div classname="image">
+            <div className="image">
                 <img src={carImage} alt="Car driving away" />
             </div>
         </div>
